@@ -1,8 +1,10 @@
-- name: Scan dependencies
-  uses: dependency-check/Dependency-Check_Action@main
-  with:
-    project: "DevSecOps Demo"
-    path: "."
-    format: "HTML"
-    out: "reports"
-    failBuildOnCVSS: 7
+{
+  "name": "devsecops-demo",
+  "version": "1.0.0",
+  "description": "Deliberately vulnerable application for DevSecOps demo",
+  "main": "app.js",
+  "dependencies": {
+    "express": "4.17.1",
+    "lodash": "4.17.15"
+  }
+}
