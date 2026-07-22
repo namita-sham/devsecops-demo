@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-const API_KEY = "AKIAIOSFODNN7EXAMPLE";
+const githubToken = "ghp_abcdefghijklmnopqrstuvwxyz1234567890";
 
 app.get("/", (req, res) => {
     res.send("Welcome to the vulnerable application");
