@@ -15,50 +15,46 @@ jobs:
 
     steps:
 
-      # Download repository
+      # Download code
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
 
-      # Secret scanning
-      - name: Scan for hardcoded secrets
+      # GITLEAKS
+      - name: Gitleaks Secret Scan
         continue-on-error: true
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
-      # Dependency vulnerability scanning
-      - name: Scan dependencies with OWASP Dependency Check
+      # OWASP DEPENDENCY CHECK
+      - name: OWASP Dependency Check
         continue-on-error: true
         uses: dependency-check/Dependency-Check_Action@main
         with:
           project: "DevSecOps Demo"
           path: "."
           format: "HTML"
-          out: "reports"
+          out: "dependency-check-report"
 
 
-      # Upload OWASP report
-      - name: Upload Dependency Check Report
+      # Upload OWASP Report
+      - name: Upload OWASP Report
         uses: actions/upload-artifact@v4
         with:
-          name: dependency-check-report
-          path: reports
+          name: OWASP-Dependency-Report
+          path: dependency-check-report
 
 
-      # Build Docker image
-      - name: Build Docker image
-        run: docker build -t devsecops-demo .
-
-
-      # Container vulnerability scanning
-      - name: Scan Docker image with Trivy
+      # TRIVY FILESYSTEM SCAN
+      - name: Trivy Vulnerability Scanner
         continue-on-error: true
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: "devsecops-demo"
-          format: "table"
+          scan-type: "fs"
+          scan-ref: "."
           severity: "HIGH,CRITICAL"
+          format: "table"
