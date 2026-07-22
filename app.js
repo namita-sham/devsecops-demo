@@ -1,10 +1,12 @@
 const express = require("express");
+
 const app = express();
 
-const githubToken = "ghp_abcdefghijklmnopqrstuvwxyz1234567890";
+// Intentionally exposed secret for Gitleaks demo
+const GITHUB_TOKEN = "ghp_8vJk2L9mQ4rT7xP3sW6nY5cB1dF0aE9zX4u";
 
 app.get("/", (req, res) => {
-    res.send("Welcome to the vulnerable application");
+    res.send("Welcome to the vulnerable DevSecOps application");
 });
 
 app.listen(3000, () => {
